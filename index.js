@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Calendar, AlertTriangle, Plus, TrendingUp, Package, DollarSign, Menu, X, Check, LogOut, Mail, Lock } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import ReactDOM from 'react-dom/client';
 
 export default function ManagerControlCentral() {
     const [user, setUser] = useState(null);
@@ -37,7 +38,6 @@ export default function ManagerControlCentral() {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [eventChecklist, setEventChecklist] = useState({});
 
-    // Cargar datos del localStorage al montar
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
         const savedEvents = localStorage.getItem('events');
@@ -50,7 +50,6 @@ export default function ManagerControlCentral() {
         if (savedTransactions) setTransactions(JSON.parse(savedTransactions));
     }, []);
 
-    // Guardar datos en localStorage cuando cambian
     useEffect(() => {
         if (user) localStorage.setItem('events', JSON.stringify(events));
     }, [events, user]);
@@ -367,7 +366,6 @@ export default function ManagerControlCentral() {
         </div>
     );
 
-    // PANTALLA DE LOGIN
     if (!user) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center p-4">
@@ -430,7 +428,6 @@ export default function ManagerControlCentral() {
         );
     }
 
-    // APP LOGUEADA
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-gray-900 text-white p-4">
@@ -468,3 +465,6 @@ export default function ManagerControlCentral() {
         </div>
     );
 }
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<ManagerControlCentral />);
